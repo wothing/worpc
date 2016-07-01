@@ -1,2 +1,2 @@
 # worpc
-Rpc over NSQ
+gRpc middlewares for wothing projects.
