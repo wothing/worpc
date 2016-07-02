@@ -16,17 +16,15 @@ const (
 )
 
 func Recovery(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-	tid := GetTidFromContext(ctx)
-
 	// recovery func
 	defer func() {
 		if r := recover(); r != nil {
 			// log stack
 			stack := make([]byte, MAXSTACKSIZE)
 			stack = stack[:runtime.Stack(stack, false)]
-			log.Terrorf(tid, "panic grpc invoke: %s, err=%v, stack:\n%s", info.FullMethod, r, string(stack))
+			log.Terrorf(GetTidFromContext(ctx), "panic grpc invoke: %s, err=%v, stack:\n%s", info.FullMethod, r, string(stack))
 
-			// if panic, set error to err, in order that client and sense it.
+			// if panic, set custom error to 'err', in order that client and sense it.
 			err = grpc.Errorf(codes.Unknown, "internal panic error: %v", r)
 		}
 	}()
