@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pb;
+
+// protoc -I=. *.proto --go_out=plugins=grpc:.
+
+message HelloRequest {
+    string greeting = 1;
+}
+
+message HelloResponse {
+    string reply = 1;
+}
+
+service HelloService {
+    rpc NormalHello(HelloRequest) returns (HelloResponse);
+    rpc PanicHello(HelloRequest) returns (HelloResponse);
+    rpc ErrHello(HelloRequest) returns (HelloResponse);
+}
