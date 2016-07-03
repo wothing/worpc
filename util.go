@@ -28,8 +28,7 @@ var (
 
 // MarshalToString converts a protocol buffer object to JSON string.
 func marshal(x interface{}) string {
-	v := reflect.ValueOf(x)
-	if !v.IsValid() || v.IsNil() {
+	if x == nil || reflect.ValueOf(x).IsNil() {
 		return fmt.Sprintf("<nil>")
 	}
 
