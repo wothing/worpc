@@ -18,13 +18,13 @@ func main() {
 	client := pb.NewHelloServiceClient(conn)
 
 	{
-		ctx := metadata.NewContext(context.Background(), metadata.Pairs("tid", "normal-hello-request"))
-		resp, err := client.NormalHello(ctx, &pb.HelloRequest{Greeting: "world"})
+		// ctx := metadata.NewContext(context.Background(), metadata.Pairs("tid", "normal-hello-request"))
+		resp, err := client.NormalHello(context.Background(), &pb.HelloRequest{Greeting: "world"})
 		fmt.Printf("normal hello: resp=%#v, error=%v\n", resp, err)
 	}
 	{
-		ctx := metadata.NewContext(context.Background(), metadata.Pairs("tid", "normal-err-request"))
-		resp, err := client.ErrHello(ctx, &pb.HelloRequest{Greeting: "world"})
+		// ctx := metadata.NewContext(context.Background(), metadata.Pairs("tid", "normal-err-request"))
+		resp, err := client.NormalHello(context.Background(), &pb.HelloRequest{Greeting: "world"})
 		fmt.Printf("err hello: resp=%#v, error=%v\n", resp, err)
 	}
 	{

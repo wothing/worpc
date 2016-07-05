@@ -25,7 +25,7 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("starting hello service at %d", *port)
+	log.CtxPrintf(nil, "starting hello service at %d", *port)
 	s := worpc.NewServer()
 	pb.RegisterHelloServiceServer(s, &helloServer{})
 	s.Serve(lis)
@@ -35,23 +35,18 @@ type helloServer struct {
 }
 
 func (helloServer) NormalHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
-	tid := worpc.GetTidFromContext(ctx)
-
-	log.Tinfof(tid, "in normal hello.")
+	log.CtxInfof(ctx, "in normal hello.")
 	return &pb.HelloResponse{Reply: "Hello, " + req.Greeting}, nil
 }
 
 func (helloServer) PanicHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
-	tid := worpc.GetTidFromContext(ctx)
-
-	log.Tinfof(tid, "in panic hello.")
+	log.CtxInfof(ctx, "in panic hello.")
 	panic(fmt.Errorf("nothing"))
 
 	return &pb.HelloResponse{Reply: "Hello, " + req.Greeting}, nil
 }
 
 func (helloServer) ErrHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
-	tid := worpc.GetTidFromContext(ctx)
-	log.Tinfof(tid, "in error hello.")
+	log.CtxInfof(ctx, "in error hello.")
 	return nil, grpc.Errorf(codes.Canceled, "just try to error")
 }

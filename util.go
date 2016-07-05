@@ -9,18 +9,7 @@ import (
 
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc/metadata"
 )
-
-func GetTidFromContext(ctx context.Context) string {
-	if md, ok := metadata.FromContext(ctx); ok {
-		if md["tid"] != nil && len(md["tid"]) > 0 {
-			return md["tid"][0]
-		}
-	}
-	return "00000000-0000-0000-0000-000000000000"
-}
 
 var (
 	js = &jsonpb.Marshaler{EnumsAsInts: true, EmitDefaults: true, OrigName: true}
