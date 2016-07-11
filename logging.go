@@ -16,7 +16,7 @@ func Logging(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, h
 
 	log.CtxInfof(ctx, "calling %s, req=%s", info.FullMethod, marshal(req))
 	resp, err = handler(ctx, req)
-	log.CtxInfof(ctx, "finished %s, took=%v, resp=%s, err=%v", info.FullMethod, time.Since(start), marshal(resp), err)
+	log.CtxInfof(ctx, "finished %s, took=%v, resp=%v, err=%v", info.FullMethod, time.Since(start), resp, err)
 
 	return resp, err
 }
